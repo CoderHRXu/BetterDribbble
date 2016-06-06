@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import "NSUserDefaults+TokenAccess.h"
+#import "BETHttCongifuration.h"
+#import "BETAuthorization.h"
 
 @interface AppDelegate ()
 
@@ -17,7 +20,20 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    if (![[NSUserDefaults standardUserDefaults] getToken]) {
+       
+    }
     return YES;
+}
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options
+{
+    if(url.absoluteString.length > 0){
+        [BETAuthorization handleRedirectURL:url];
+        return YES;
+    }
+    
+    return NO;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
